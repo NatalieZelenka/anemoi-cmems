@@ -1,0 +1,4 @@
+copernicusmarine
+anemoi-datasets  # Needs some local edits (see README)
+xarray
+pytest

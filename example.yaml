@@ -1,0 +1,58 @@
+name: aifs-mod-my-phy-m-cmems-0.083deg-1993-2021-24h-v1
+# content ECMWF: class-type-stream-expver
+# content CMEMS: group[-pc]-type-thematic[-var]-typology
+# extra string could contain: [-area][-datalevels][-sateliteplatform][-insitu]
+
+description: |
+
+  Copernicus Marine Environment Monitoring Service (CMEMS) global multi-year (my) physics (phy) model (mod) daily means (-m) at 0.083deg resolution.
+  
+  Content string for CMEMS used naming convention: group[-pc]-type-thematic[-var]-typology
+   in this case group-type-thematic-typology => mod-my-phy-m
+
+attribution: ECMWF
+
+licence: CC-BY-4.0
+
+dates:
+  start: '1993-01-01T00:00:00'
+  end: '2021-06-30T18:00:00'  # TODO: change to 2025(?) later
+  frequency: 24h
+
+input:
+  cmems:
+    dataset_id: 'cmems_mod_glo_phy_my_0.083deg_P1D-m'
+    depth_levels: 
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 14
+    - 19
+    - 25
+    - 28
+    - 31
+    - 34
+    - 37
+    - 40
+    - 43
+    - 45
+    - 48
+    - 50
+
+    param:  
+    - thetao  # Potential temperature
+    - so     # Salinity
+    - zos    # Sea surface height
+    - uo     # Eastward sea water velocity
+    - vo     # Northward sea water velocity
+    - siconc  # Sea ice concentration
+    - usi    # Eastward sea ice velocity
+    - vsi    # Northward sea ice velocity
+    - sithick  # Sea ice thickness
+    - mlotst  # Mixed layer thickness 
