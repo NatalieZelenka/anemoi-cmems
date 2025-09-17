@@ -2,3 +2,4 @@ venv/
 *.zarr/
 *.egg-info/
 __pycache__/
+*.zarr.*

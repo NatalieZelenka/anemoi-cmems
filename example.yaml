@@ -1,58 +1,134 @@
-name: aifs-mod-my-phy-m-cmems-0.083deg-1993-2021-24h-v1
-# content ECMWF: class-type-stream-expver
-# content CMEMS: group[-pc]-type-thematic[-var]-typology
-# extra string could contain: [-area][-datalevels][-sateliteplatform][-insitu]
+name: aifs-mod-my-phy-m-cmems-N320-1993-2021-24h-v1
+
 
 description: |
+  Uses copernicus Marine Environment Monitoring Service (CMEMS) global multi-year (my) physics (phy) model (mod) daily means (-m) at 0.083deg resolution,
+   regridded to N320 resolution.
 
-  Copernicus Marine Environment Monitoring Service (CMEMS) global multi-year (my) physics (phy) model (mod) daily means (-m) at 0.083deg resolution.
+  Combines parameters from three datasets:
+    - cmems_mod_glo_phy_my_0.083deg_static (static fields: land sea mask "mask" and bathymetry "deptho")
+    - cmems_mod_glo_phy_my_0.083deg_P1D-m (time varying fields:  1993-2021)
+    - cmems_mod_glo_phy_myint_0.083deg_P1D-m ((time varying fields July 2021 onwards - "interim" dataset)
   
-  Content string for CMEMS used naming convention: group[-pc]-type-thematic[-var]-typology
-   in this case group-type-thematic-typology => mod-my-phy-m
+  Time varying datasets include parameters with depth levels and without:
+    - Parameters with depth levels: thetao, so, uo, vo
+    - Parameters without depth levels: siconc, zos, usi, vsi, sithick, mlotst
+
+# TODO: move this to README for cmems plugin:
+# NOTE: Content string for CMEMS used naming convention: group[-pc]-type-thematic[-var]-typology
+#   in this case group-type-thematic-typology => mod-my-phy-m
+# TODO: Find where CMEMS docsabout group/name/etc is and add that to README
+# extra string could contain: [-area][-datalevels][-sateliteplatform][-insitu]
+# content ECMWF: class-type-stream-expver
+# content CMEMS: group[-pc]-type-thematic[-var]-typology
 
 attribution: ECMWF
 
 licence: CC-BY-4.0
 
 dates:
-  start: '1993-01-01T00:00:00'
-  end: '2021-06-30T18:00:00'  # TODO: change to 2025(?) later
+  # start: '1993-01-01T00:00:00'
+  # end: '1993-01-03T00:00:00'
+  start: '2021-06-26T00:00:00'  #Test 
+  end: '2021-06-29T00:00:00'    #Test
+  # start: '1993-01-01T00:00:00'
+  # end: '2025-08-26T00:00:00'
   frequency: 24h
+  # missing:  # ??
+  # - '2021-06-30T00:00:00'
 
 input:
+  # pipe:
+  # - join: 
+  #   # Static fields (land sea mask "mask" and bathymetry "deptho"):
+  #   - repeated_dates:
+  #       mode: constant
+  #       source:
+  #         cmems:
+  #           dataset_id: 'cmems_mod_glo_phy_my_0.083deg_static'
+  #           param: [mask] #, deptho]
+  #           depth_indices: [1, 2]
+  #   # Parameters that vary over time:
+  #   - concat: 
+      # Main dataset: 1993 to June 2021
+      # - dates:
+      #     start: 2021-06-28 00:00:00
+      #     end: 2021-06-30 23:00:00
   cmems:
     dataset_id: 'cmems_mod_glo_phy_my_0.083deg_P1D-m'
-    depth_levels: 
-    - 1
-    - 2
-    - 3
-    - 4
-    - 5
-    - 6
-    - 7
-    - 8
-    - 9
-    - 14
-    - 19
-    - 25
-    - 28
-    - 31
-    - 34
-    - 37
-    - 40
-    - 43
-    - 45
-    - 48
-    - 50
+    depth_indices: [1, 2] #, 3, 4, 5, 6, 7, 8, 9, 14, 19, 25, 28, 31, 34, 37, 40, 43, 45, 48]
+    param: [thetao] #, so, uo, vo, siconc, zos, usi, vsi, sithick, mlotst]
+      # # Interim dataset: July 2021 onwards
+      # - dates:
+      #     start: 2021-07-01 00:00:00
+      #     end: 2021-07-02 00:00:00
+      #   cmems:
+      #     dataset_id: 'cmems_mod_glo_phy_myint_0.083deg_P1D-m'
+      #     depth_indices: [1, 2] #, 3, 4, 5, 6, 7, 8, 9, 14, 19, 25, 28, 31, 34, 37, 40, 43, 45, 48]
+      #     # - 50 thetao_50 is all NaNs
+      #     param: [thetao] #, so, uo, vo, siconc, zos, usi, vsi, sithick, mlotst]
+      #     # TODO: params without depth levels fails if only those variables are requested
+  # - rename:
+  #     levelist:
+  #       0.49402499198913574: 1
+  #       1.5413750410079956: 2
+  #       2.6456689834594727: 3
+  #       3.8194949626922607: 4
+  #       5.078224182128906: 5
+  #       6.440614223480225: 6
+  #       7.92956018447876: 7
+  #       9.572997093200684: 8
+  #       11.404999732971191: 9
+  #       13.467140197753906: 10
+  #       15.810070037841797: 11
+  #       18.495559692382812: 12
+  #       21.598819732666016: 13
+  #       25.211410522460938: 14
+  #       29.444730758666992: 15
+  #       34.43415069580078: 16
+  #       40.344051361083984: 17
+  #       47.37369155883789: 18
+  #       55.76428985595703: 19
+  #       65.80726623535156: 20
+  #       77.85385131835938: 21
+  #       92.3260726928711: 22
+  #       109.72930145263672: 23
+  #       130.66600036621094: 24
+  #       155.85069274902344: 25
+  #       186.12559509277344: 26
+  #       222.47520446777344: 27
+  #       266.0403137207031: 28
+  #       318.1274108886719: 29
+  #       380.2130126953125: 30
+  #       453.9377136230469: 31
+  #       541.0889282226562: 32
+  #       643.5667724609375: 33
+  #       763.3331298828125: 34
+  #       902.3392944335938: 35
+  #       1062.43994140625: 36
+  #       1245.291015625: 37
+  #       1452.2509765625: 38
+  #       1684.2840576171875: 39
+  #       1941.8929443359375: 40
+  #       2225.077880859375: 41
+  #       2533.3359375: 42
+  #       2865.702880859375: 43
+  #       3220.820068359375: 44
+  #       3597.031982421875: 45
+  #       3992.48388671875: 46
+  #       4405.22412109375: 47
+  #       4833.291015625: 48
+  #       5274.7841796875: 49
+  #       5727.9169921875: 50
+  # # TODO: regrid
+  # - regrid:
+  #     ingrid: [0.083, 0.083]
+  #     outgrid: N320
 
-    param:  
-    - thetao  # Potential temperature
-    - so     # Salinity
-    - zos    # Sea surface height
-    - uo     # Eastward sea water velocity
-    - vo     # Northward sea water velocity
-    - siconc  # Sea ice concentration
-    - usi    # Eastward sea ice velocity
-    - vsi    # Northward sea ice velocity
-    - sithick  # Sea ice thickness
-    - mlotst  # Mixed layer thickness 
+statistics:
+  allow_nans: True
+
+output:
+  chunking:
+    dates: 1
+    variables: 20
