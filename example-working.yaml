@@ -3,25 +3,13 @@ name: example-working
 description: |
   Very simple test version of the dataset to understand dates bug.
 
-  Uses copernicus Marine Environment Monitoring Service (CMEMS) global multi-year (my) physics (phy) model (mod) daily means (-m) at 0.083deg resolution,
-   regridded to N320 resolution.
-
-  Combines parameters from three datasets:
-    - cmems_mod_glo_phy_my_0.083deg_static (static fields: land sea mask "mask" and bathymetry "deptho")
-    - cmems_mod_glo_phy_my_0.083deg_P1D-m (time varying fields:  1993-2021)
-    - cmems_mod_glo_phy_myint_0.083deg_P1D-m ((time varying fields July 2021 onwards - "interim" dataset)
-  
-  Time varying datasets include parameters with depth levels and without:
-    - Parameters with depth levels: thetao, so, uo, vo
-    - Parameters without depth levels: siconc, zos, usi, vsi, sithick, mlotst
-
 attribution: ECMWF
 
 licence: CC-BY-4.0
 
 dates:
-  start: '2021-06-26T00:00:00'
-  end: '2021-06-29T00:00:00'
+  start: '2021-03-27T00:00:00'
+  end: '2021-03-28T00:00:00'  # last date that works
   frequency: 24h
 
 input:
