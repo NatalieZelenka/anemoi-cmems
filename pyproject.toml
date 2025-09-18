@@ -35,9 +35,14 @@ classifiers = [
   "Programming Language :: Python :: Implementation :: PyPy",
 ]
 
+dynamic = ["dependencies"]
+
 urls.Homepage = "https://github.com/ecmwf/anemoi-plugins"
 
 entry-points."anemoi.datasets.create.sources".cmems = "anemoi_cmems.cmems:CmemsPlugin"
 
 [tool.setuptools]
 packages = [ "anemoi_cmems"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
